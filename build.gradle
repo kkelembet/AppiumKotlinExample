@@ -14,9 +14,10 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    testCompile group: 'org.testng', name: 'testng', version: '6.11'
+    testImplementation group: 'org.testng', name: 'testng', version: '7.1.0'
     testImplementation 'io.cucumber:cucumber-java:4.7.4'
     testImplementation 'io.cucumber:cucumber-testng:4.7.4'
+    testImplementation "io.appium:java-client:5.0.4"
 }
 
 compileKotlin {
@@ -33,13 +34,14 @@ configurations {
     }
 }
 
+
 task cucumber() {
     dependsOn assemble, compileTestJava
     doLast {
         javaexec {
             main = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = ['--plugin', 'pretty', '--glue', 'gradle.cucumber', 'src/test/resources']
+            args = ['--plugin', 'pretty', '--glue', 'hellocucumber', 'src/test/resources']
         }
     }
 }

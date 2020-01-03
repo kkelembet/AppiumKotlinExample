@@ -12,7 +12,7 @@ class StepDefs {
     private lateinit var today: String
     private lateinit var actualAnswer: String
 
-    @Given("^today is Sunday$")
+    @Given("today is Sunday")
     fun today_is_Sunday() {
         today = "Sunday"
     }
