@@ -17,7 +17,7 @@ dependencies {
     testImplementation group: 'org.testng', name: 'testng', version: '7.1.0'
     testImplementation 'io.cucumber:cucumber-java:4.7.4'
     testImplementation 'io.cucumber:cucumber-testng:4.7.4'
-    testImplementation "io.appium:java-client:5.0.4"
+    testImplementation "io.appium:java-client:7.3.0"
 }
 
 compileKotlin {
@@ -33,7 +33,6 @@ configurations {
         extendsFrom testImplementation
     }
 }
-
 
 task cucumber() {
     dependsOn assemble, compileTestJava

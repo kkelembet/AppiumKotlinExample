@@ -4,17 +4,16 @@ package hellocucumber
  * Created by Ekaterina Kelembet on 02.01.2020.
  */
 
+import driver.MobileDriver
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 import org.testng.Assert.assertTrue
 import pages.SplashActivity
-import util.Setup
 
+class SplashStepsDefinition {
 
-class SplashStepsDefinition: Setup() {
-
-    private val splashActivity = SplashActivity(driver!!)
+    private val splashActivity = SplashActivity(MobileDriver.driver)
 
     @Given("Splash activity")
     fun splashActivity() {
