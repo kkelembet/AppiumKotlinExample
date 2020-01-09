@@ -6,7 +6,6 @@ import io.appium.java_client.android.AndroidDriver
 import io.appium.java_client.ios.IOSDriver
 import io.appium.java_client.remote.MobileCapabilityType
 import org.openqa.selenium.remote.DesiredCapabilities
-import util.OS
 import java.net.URL
 import java.util.concurrent.TimeUnit
 
@@ -20,7 +19,7 @@ class MobileDriver {
         val driver: AppiumDriver<MobileElement>
 
         init {
-            os = OS.valueOf(System.getProperty("platform", OS.ANDROID.name))
+            os = OS.valueOf(System.getProperty("platform", OS.ANDROID.name)?: System.getProperty("platform", OS.IOS.name))
             val capabilities = DesiredCapabilities()
             val serverAddress = URL("http://localhost:4723/wd/hub")
 
@@ -38,8 +37,10 @@ class MobileDriver {
             } else {
                 capabilities.setCapability(MobileCapabilityType.APPIUM_VERSION, "1.15.1")
                 capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "iOS")
-                capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone SE")
+                capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone Xr")
+                capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "12.4")
                 capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest")
+                capabilities.setCapability("app", "Users/ekaterinak/Downloads/Creator Connect.app")
 
                 driver = IOSDriver(serverAddress, capabilities)
             }
