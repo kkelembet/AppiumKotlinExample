@@ -8,6 +8,10 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+wrapper {
+    gradleVersion = '6.0'
+}
+
 repositories {
     mavenCentral()
 }
@@ -34,15 +38,26 @@ configurations {
     }
 }
 
-task cucumber() {
+task testAndroid() {
     dependsOn assemble, compileTestJava
     doLast {
         javaexec {
+            systemProperty "platform", "Android"
             main = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
             args = ['--plugin', 'pretty', '--glue', 'hellocucumber', 'src/test/resources']
-            project.findProperty('platform')
         }
     }
 }
 
+task testiOS() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            systemProperty "platform", "iOS"
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'hellocucumber', 'src/test/resources']
+        }
+    }
+}

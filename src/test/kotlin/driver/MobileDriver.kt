@@ -6,6 +6,7 @@ import io.appium.java_client.android.AndroidDriver
 import io.appium.java_client.ios.IOSDriver
 import io.appium.java_client.remote.MobileCapabilityType
 import org.openqa.selenium.remote.DesiredCapabilities
+import org.testng.Assert
 import java.net.URL
 import java.util.concurrent.TimeUnit
 
@@ -19,7 +20,18 @@ class MobileDriver {
         val driver: AppiumDriver<MobileElement>
 
         init {
-            os = OS.valueOf(System.getProperty("platform", OS.ANDROID.name)?: System.getProperty("platform", OS.IOS.name))
+            val platformProperty = System.getProperty("platform")
+            println("Driver platform: $platformProperty")
+
+            os = when (platformProperty) {
+                "iOS" -> OS.IOS
+                "Android" -> OS.ANDROID
+                else -> {
+                    Assert.assertTrue(false, "Please set platform in build.gradle")
+                    OS.UNDEFINED
+                }
+            }
+
             val capabilities = DesiredCapabilities()
             val serverAddress = URL("http://localhost:4723/wd/hub")
 
@@ -44,7 +56,6 @@ class MobileDriver {
 
                 driver = IOSDriver(serverAddress, capabilities)
             }
-
             driver.manage()?.timeouts()?.implicitlyWait(30, TimeUnit.SECONDS)
         }
 
